@@ -66,3 +66,14 @@ functions:
             parameters:
               paths:
                 userId: true
+  getProfile:
+    handler: handler.fb_getProfile
+    role: arn:aws:iam::895647408601:role/fitbalance-lambda-role
+    events:
+      - http:
+          method: get
+          path: profile/{userId}
+          request:
+            parameters:
+              paths:
+                userId: true

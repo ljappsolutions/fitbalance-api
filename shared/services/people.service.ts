@@ -1,21 +1,22 @@
-import { DynamoDB } from 'aws-sdk';
+import { DynamoDB } from "aws-sdk";
 
-export class RoutinesService {
+export class PeopleService {
     private dynamo: DynamoDB.DocumentClient;
     private tableName: string;
+    
     constructor() {
         this.tableName = `${process.env.ENV}-fitbalance-routine`;
         this.dynamo = new DynamoDB.DocumentClient();
     }
 
-    public async getRoutineByUser(userId: string): Promise<any> {
+    public async getUserProfile(userId: string): Promise<any> {
         const params = {
             TableName: this.tableName,
             Key: {
                 userId,
             },
             AttributesToGet: [
-                "routine",
+                "person",
             ]
         };
         try {
