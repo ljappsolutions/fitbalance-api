@@ -40,6 +40,19 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
+    DevClassTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: dev-fitbalance-class
+        AttributeDefinitions:
+          - AttributeName: classId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: classId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
     ProdRoutineTable:
       Type: AWS::DynamoDB::Table
       Properties:
@@ -49,6 +62,19 @@ resources:
             AttributeType: S
         KeySchema:
           - AttributeName: userId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+    ProdClassTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: prod-fitbalance-class
+        AttributeDefinitions:
+          - AttributeName: classId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: classId
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 5
@@ -77,3 +103,10 @@ functions:
             parameters:
               paths:
                 userId: true
+  getClass:
+    handler: handler.fb_getClass
+    role: arn:aws:iam::895647408601:role/fitbalance-lambda-role
+    events:
+      - http:
+          method: get
+          path: class
